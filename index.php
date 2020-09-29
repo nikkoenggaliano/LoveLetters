@@ -55,19 +55,7 @@
 </head>
 <body>
 
-
-<!-- <div class="container">
-  <div class="content">
-    <div class="nes-container with-title is-centered">
-      <p class="title">Container.is-centered</p>
-      <p>Good morning. Thou hast had da good night's sleep, I hope.</p>
-    </div>
-  </div>
-</div>
- -->
-<div class="navbar">
-
-</div> 
+<div class="navbar"></div> 
 
 <div id="container" class="container-fluid gedf-wrapper">
   <div class="row">
@@ -75,8 +63,43 @@
     <div class="col-md-1"></div>
     <div class="col-md-10">
 
-      <div class="row">
+      <?php 
 
+        if(!isset($_GET['id']) || empty($_GET['id'])){
+
+
+      ?>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="nes-container with-title is-centered">
+            <div class="nes-field">
+              <label for="default_select">Dari manakah kamu tahu app ini?</label>
+              <div class="nes-select">
+                <select required name="dari" id="default_select">
+                  <option value="twitter" selected>Twitter</option>
+                  <option value="instagram">Instagram</option>
+                  <option value="facebook">Facebook</option>
+                  <option value="wa">WhatsApp</option>
+                  <option value="telegram">Telegram</option>
+                  <option value="line">Line</option>
+                  <option value="dll">Lainya</option>
+                </select>
+              </div>
+              <label for="name_field">Nama kamu</label>
+              <input type="text" required name="nama" placeholder="Masukan nama kamu" id="name_field" class="nes-input">
+              <button type="button" class="nes-btn is-primary float-right" align="right">Daftar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <?php 
+        }else{
+
+      ?>
+
+      <div class="row">
         <div class="col-md-12">
           <div class="nes-container with-title is-centered">
             <label for="textarea_field">Letters for Jae</label>
@@ -86,71 +109,23 @@
           </div>
         </div>
       </div>  
-
       <div id="cardisi">
         <div style="position: relative;margin: 0px auto;max-width: 1552px;">
-        <div class="cardwarp col-md-4">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="card-link">Card link</a>
-              <a href="#" class="card-link">Another link</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="cardwarp col-md-4">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="card-link">Card link</a>
-              <a href="#" class="card-link">Another link</a>
-            </div>
-          </div>
-        </div>
         
         <div class="cardwarp col-md-4">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+              <h5 class="card-title" style="color: #4285f4">28-9-2020 5:49</h5>
               <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="card-link">Card link</a>
-              <a href="#" class="card-link">Another link</a>
-            </div>
-          </div>
-        </div>
-        
-        <div class="cardwarp col-md-4">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="card-link">Card link</a>
-              <a href="#" class="card-link">Another link</a>
             </div>
           </div>
         </div>
 
-        <div class="cardwarp col-md-4">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="card-link">Card link</a>
-              <a href="#" class="card-link">Another link</a>
-            </div>
-          </div>
-        </div>
 
       </div>
       </div>
+    <?php } ?>
+
 
     </div><!-- end col-10 -->
     <div class="col-md-1"></div>
@@ -161,7 +136,27 @@
 </div>
 
 
+<script type="text/javascript">
+  
+  function cards_html(date, isi){
+      var cards =  '<div class="cardwarp col-md-4">'
+      cards += '<div class="card">'
+      cards += '<div class="card-body">'
+      cards += '<h5 class="card-title" style="color: #4285f4">'+date+'</h5>'
+      cards += '<p class="card-text">'+isi+'</p>'
+      cards += '</div>'
+      cards += '</div>'
+      cards += '</div>'
+      return cards;
+  }
 
+
+      for(let i = 0; i<10; i++){
+              $("#cardisi").append(cards_html('tanggal', 'You are so worthy, we love you so much!'));        
+      }
+
+
+</script>
 
 </body>
 </html>
