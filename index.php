@@ -103,26 +103,26 @@
         <div class="col-md-12">
           <div class="nes-container with-title is-centered">
             <label for="textarea_field" id="labname"></label>
-            <textarea id="textarea_field" class="nes-textarea" placeholder="Write some love letters for @jae"></textarea>
-            <button type="button" class="nes-btn is-primary float-right" align="right">Submit</button>
+            <textarea id="textarea_field" class="nes-textarea"></textarea>
+            <button type="button" id="sendm" class="nes-btn is-primary float-right" onclick="sendm();" align="right">Kirim</button>
             <br>
           </div>
         </div>
       </div>
-      
-        <div class="col-md-12" align="center" id="newmsg"> 
-          
-        </div>
+      <br>
+        <div class="col-md-12" align="center" id="newmsg"></div>
+        <br>
 
-      <div id="cardisi">
+<!--       <div id="cardisi">
         <div style="position: relative;margin: 0px auto;max-width: 1552px;">
-        
-
-          
-
-
       </div>
-      </div>
+      </div> -->
+
+
+
+<div class="card-columns" id="cardisi">
+
+</div>
     <?php } ?>
 
 
@@ -137,35 +137,90 @@
 
 <script type="text/javascript">
 
-$('#textarea_field').attr("placeholder","Hello Nikko");
-
-  function GetLastID(array){
-    
-    array = array.sort(function(a, b){return b-a})
-    return array[0]
-
-  }
-
-
-  function htmlEntities(str) {
-    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-  }
-
-  function cards_html(date, isi){
-      var cards =  '<div class="cardwarp col-md-4">'
-      cards += '<div class="card">'
-      cards += '<div class="card-body">'
-      cards += '<h5 class="card-title" style="color: #4285f4">'+date+'</h5>'
-      cards += '<p class="card-text">'+isi+'</p>'
-      cards += '</div>'
-      cards += '</div>'
-      cards += '</div>'
-      return cards;
-  }
-  let uid = window.location.search.substr(1).replace("id=", "");
+  let ipaddr = '<?php echo $_SERVER['REMOTE_ADDR']; ?>';
+  let ua = '<?php echo $_SERVER['HTTP_USER_AGENT']; ?>';
+  let uid = window.location.search.substr(1).replace("id=", ""); //replaced soon on deployed
   var last_count = 0;
   var data_baru  = 0;
   var now_id = [];
+  var lastSended = "";
+
+  function GetLastID(array){
+    array = array.sort(function(a, b){return b-a})
+    return array[0]
+  }
+
+  function sendm(){
+    $("#sendm").removeClass('nes-btn is-primary').addClass('nes-btn is-disabled');
+    let msg = $("#textarea_field").val();
+    console.log(msg, msg.length);
+
+    if(msg.length == 0){
+      alert('Pesan tidak boleh kosong!');
+      $("#sendm").removeClass('nes-btn is-disabled').addClass('nes-btn is-primary');
+      return false;
+    }
+
+
+    if(msg.length <= 3){
+      alert('Pesan terlalu pendek');
+      $("#sendm").removeClass('nes-btn is-disabled').addClass('nes-btn is-primary');
+      return false;
+    }
+
+
+    if(msg == lastSended){
+      alert('Silahkan masukan pesan yang lain, pesan ini sudah terkirim!');
+      $("#sendm").removeClass('nes-btn is-disabled').addClass('nes-btn is-primary');
+      return false;
+    }
+
+    const api = "http://elpida.my.id/ll/api.php";
+
+    $.ajax({
+      'url': api,
+      'type': 'POST',
+      'data':{
+        msg:msg,
+        uid:uid,
+        ua:ua,
+        ip:ipaddr
+      },
+      'async': false,
+      success: function(result){
+        if(result.code == 200){
+          lastSended = msg
+          $("#textarea_field").val('');
+          $('#textarea_field').attr("placeholder","Pesanmu sudah terkirim!");
+          $("#sendm").removeClass('nes-btn is-disabled').addClass('nes-btn is-primary');
+        }
+      },
+      error: function(err, err2, err3){
+        alert('Maaf ada error!');
+        $("#sendm").removeClass('nes-btn is-disabled').addClass('nes-btn is-primary');
+      }
+
+    })
+
+
+
+
+  }
+
+
+  function cards_html(date, isi){
+      var cards = "";
+      // var cards =  '<div class="cardwarp col-md-4">'
+      cards += '<div class="card">'
+      cards += '<div class="card-body">'
+      cards += '<h5 class="card-title" style="color: #4285f4; font-size: 13px">'+date+'</h5>'
+      cards += '<p class="card-text" style="font-size: 14px">'+isi+'</p>'
+      cards += '</div>'
+      cards += '</div>'
+      // cards += '</div>'
+      return cards;
+  }
+
   function firstRender(id){
 
 
@@ -184,6 +239,7 @@ $('#textarea_field').attr("placeholder","Hello Nikko");
 
         let profile_name = result.profil[0]['name'];
         $("#labname").text("Surat cinta untuk "+profile_name);
+        $('#textarea_field').attr("placeholder","Tulis pesan untuk "+profile_name);
         let pesan = result.pesan;
         last_count = result.pesan.length;
         for(d in pesan){
@@ -220,6 +276,9 @@ $('#textarea_field').attr("placeholder","Hello Nikko");
 
   function RenderNewData(){
     let lid   = GetLastID(now_id);
+    if(typeof(lid) == 'undefined' || lid.length == 0){
+      lid = 0;
+    }
     const api = `http://elpida.my.id/ll/api.php?lid=${lid}&uid=${uid}`;
     $.ajax({
       'url': api,
@@ -247,7 +306,7 @@ setInterval(function(){
     }else{
       $("#newmsg").html('<button type="button" class="nes-btn is-success" onclick="RenderNewData();" id="renew">Terdapat '+data_baru+' pesan baru</button>')
     }
-  }, 3000);
+  }, 6000);
 
 
 </script>
