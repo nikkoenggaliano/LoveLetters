@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title>Love Letters</title>
-	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
   
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
@@ -55,7 +55,7 @@
 </head>
 <body>
 
-<div class="navbar"><a href="http://ll.com"><i class="nes-octocat animate is-small"></i></a></div> 
+<div class="navbar"><a href="http://rpw.my.id"><i class="nes-octocat animate is-small"></i></a></div> 
 
 <div id="container" class="container-fluid gedf-wrapper">
   <div class="row">
@@ -151,7 +151,7 @@
   var data_baru  = 0;
   var now_id = [];
   var lastSended = "";
-  let burl = "http://ll.com/id/";
+  let burl = "http://rpw.my.id/";
 
   function copyi(){
 
@@ -199,7 +199,7 @@
         //console.log(result);
         if(result.code == 200){
           let nid = result.id;
-          window.location.href = burl + nid;
+          window.location.href = burl + "/id/" + nid;
         }
       },
       error: function(err){
