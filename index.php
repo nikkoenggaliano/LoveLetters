@@ -55,7 +55,7 @@
 </head>
 <body>
 
-<div class="navbar"></div> 
+<div class="navbar"><a href="http://ll.com"><i class="nes-octocat animate is-small"></i></a></div> 
 
 <div id="container" class="container-fluid gedf-wrapper">
   <div class="row">
@@ -86,9 +86,9 @@
                   <option value="dll">Lainya</option>
                 </select>
               </div>
-              <label for="name_field">Nama kamu</label>
+              <label for="name_field" id="nkm">Nama kamu</label>
               <input type="text" required name="nama" placeholder="Masukan nama kamu" id="name_field" class="nes-input">
-              <button type="button" class="nes-btn is-primary float-right" align="right">Daftar</button>
+              <button type="button" class="nes-btn is-primary float-right" onclick="daftar();" align="right">Daftar</button>
             </div>
           </div>
         </div>
@@ -102,6 +102,12 @@
       <div class="row">
         <div class="col-md-12">
           <div class="nes-container with-title is-centered">
+          <div class="nes-field">
+            <label for="name_field">Berikut ini url profilemu</label>
+              <input type="text" id="urlmu" class="nes-input">
+              <button type="button" onclick="copyi();" class="nes-btn is-error">Copy URL</button>
+            </div>
+            <br>
             <label for="textarea_field" id="labname"></label>
             <textarea id="textarea_field" class="nes-textarea"></textarea>
             <button type="button" id="sendm" class="nes-btn is-primary float-right" onclick="sendm();" align="right">Kirim</button>
@@ -139,15 +145,69 @@
 
   let ipaddr = '<?php echo $_SERVER['REMOTE_ADDR']; ?>';
   let ua = '<?php echo $_SERVER['HTTP_USER_AGENT']; ?>';
-  let uid = window.location.search.substr(1).replace("id=", ""); //replaced soon on deployed
+  //let uid = window.location.search.substr(1).replace("id=", ""); //replaced soon on deployed
+  let uid = window.location.pathname.replace("/id/", "");
   var last_count = 0;
   var data_baru  = 0;
   var now_id = [];
   var lastSended = "";
+  let burl = "http://ll.com/id/";
+
+  function copyi(){
+
+    $('#urlmu').select()
+    document.execCommand("Copy");
+
+  }
 
   function GetLastID(array){
     array = array.sort(function(a, b){return b-a})
     return array[0]
+  }
+
+  function daftar(){
+    let dari = $('select[name=dari]').val();
+    let nama = $("#name_field").val();
+    if(dari.length < 1){
+      alert('Dari sosmed mohon diisi');
+      return false;
+    }
+
+    if(nama == ''){
+      alert('Nama tidak boleh kosong!');
+      return false;
+    }
+
+    if(nama.length <= 3){
+      alert('Nama tidak boleh kurang dari 3 huruf!');
+      return false;
+    }
+    $("#nkm").val("Pendaftaran diproses!");
+    const api = "https://elpida.my.id/ll/api.php";
+    $.ajax({
+
+      'url':api,
+      'type':'POST',
+      'async':false,
+      'data':{
+        daftar : nama,
+        dari   : dari,
+        ua     : ua,
+        ip     : ipaddr
+      },
+      success: function(result){
+        //console.log(result);
+        if(result.code == 200){
+          let nid = result.id;
+          window.location.href = burl + nid;
+        }
+      },
+      error: function(err){
+        alert('Maaf ada error!');
+      }
+
+    });
+
   }
 
   function sendm(){
@@ -240,6 +300,8 @@
         let profile_name = result.profil[0]['name'];
         $("#labname").text("Surat cinta untuk "+profile_name);
         $('#textarea_field').attr("placeholder","Tulis pesan untuk "+profile_name);
+        $("#urlmu").val(window.location.href);
+
         let pesan = result.pesan;
         last_count = result.pesan.length;
         for(d in pesan){
