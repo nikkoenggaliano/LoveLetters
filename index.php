@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Love Letters</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Love Letters</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
   
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
@@ -10,10 +10,10 @@
   <link href="https://unpkg.com/nes.css/css/nes.css" rel="stylesheet" />
     <!-- CSS only -->
 
-	<!-- JS, Popper.js, and jQuery -->
+  <!-- JS, Popper.js, and jQuery -->
   <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 
     <style>
       html, body, pre, code, kbd, samp {
@@ -22,40 +22,51 @@
       body{
         background: #eee;
       }
+      .btnregist{
+        position: absolute;
+        right: 20px;
+        color: white;
+      }
 
-    .cardwarp {
-      padding:5px;
-      float:left;
-      max-width: 388px;
-      max-height: 388px;
-    }
-    .card{
-      box-shadow: 0px 0px 2px 2px #404040;
-    }
-    #cardisi{
-      position: relative;
-      margin: 0px auto;
-    }
+      .cardwarp {
+        padding:5px;
+        float:left;
+        max-width: 388px;
+        max-height: 388px;
+      }
+      .card{
+        box-shadow: 0px 0px 2px 2px #404040;
+        margin-top: 5px;
+      }
+      #cardisi{
+        position: relative;
+        margin: 0px auto;
+      }
+      #container{
+        margin-top: 50px;
+      }
 
-    .navbar{
-      top:0px;
-      position: fixed;
-      width: 100%;
-      height: 40px;
-      background: #4285f4;
-      z-index: 1;
-      box-shadow: 0px 0px 2px 2px #404040;
-    }
+      .logosmall{
 
-    #container{
-      margin-top: 50px;
-    }
+      }
+      .navbar{
+        top:0px;
+        position: fixed;
+        width: 100%;
+        height: 40px;
+        background: #4285f4;
+        z-index: 1;
+        box-shadow: 0px 0px 2px 2px #404040;
+      }
 
     </style>
 </head>
 <body>
 
-<div class="navbar"><a href="http://rpw.my.id"><i class="nes-octocat animate is-small"></i></a></div> 
+<div class="navbar">
+  <a href="https://rpw.my.id"><i class="nes-icon is-medium heart"></a></i>
+  <a href="https://rpw.my.id" class="btnregist">Daftar</a>
+</div> 
 
 <div id="container" class="container-fluid gedf-wrapper">
   <div class="row">
@@ -103,7 +114,7 @@
         <div class="col-md-12">
           <div class="nes-container with-title is-centered">
           <div class="nes-field">
-            <label for="name_field">Berikut ini url profilemu</label>
+            <label for="name_field">Share URL ini ke teman-temanmu</label>
               <input type="text" id="urlmu" class="nes-input">
               <button type="button" onclick="copyi();" class="nes-btn is-error">Copy URL</button>
             </div>
@@ -151,7 +162,7 @@
   var data_baru  = 0;
   var now_id = [];
   var lastSended = "";
-  let burl = "http://rpw.my.id/";
+  let burl = "https://rpw.my.id/";
 
   function copyi(){
 
@@ -199,7 +210,7 @@
         //console.log(result);
         if(result.code == 200){
           let nid = result.id;
-          window.location.href = burl + "/id/" + nid;
+          window.location.href = burl + "id/" + nid;
         }
       },
       error: function(err){
@@ -235,7 +246,7 @@
       return false;
     }
 
-    const api = "http://elpida.my.id/ll/api.php";
+    const api = "https://elpida.my.id/ll/api.php";
 
     $.ajax({
       'url': api,
@@ -285,21 +296,20 @@
 
 
     let uid = id;
-    const api = `http://elpida.my.id/ll/api.php?id=${uid}`;
+    const api = `https://elpida.my.id/ll/api.php?id=${uid}`;
     $.ajax({
       url: api,
       async: false,
       success: function(result){
 
         if(result.code == 404){
-          console.log('Redirect');
-          console.log('Profil tidak ditemukan!');
+          window.location.href = burl;
           return false;
         }
 
         let profile_name = result.profil[0]['name'];
-        $("#labname").text("Surat cinta untuk "+profile_name);
-        $('#textarea_field').attr("placeholder","Tulis pesan untuk "+profile_name);
+        $("#labname").text("Pesan untuk "+profile_name);
+        $('#textarea_field').attr("placeholder","Pesan untuk "+profile_name.substr(0,5));
         $("#urlmu").val(window.location.href);
 
         let pesan = result.pesan;
@@ -319,7 +329,7 @@
   function CekNewData(id){
     let uid   = id;
     var count = 0;
-    const api = `http://elpida.my.id/ll/api.php?id=${uid}`;
+    const api = `https://elpida.my.id/ll/api.php?id=${uid}`;
     $.ajax({
       'url': api,
       'async': false,
@@ -332,8 +342,9 @@
   }
 
   $(document).ready(function(){
-    firstRender(uid);
-    console.log(last_count);
+    if(uid > 0){
+      firstRender(uid);
+    }
   })
 
   function RenderNewData(){
@@ -341,7 +352,7 @@
     if(typeof(lid) == 'undefined' || lid.length == 0){
       lid = 0;
     }
-    const api = `http://elpida.my.id/ll/api.php?lid=${lid}&uid=${uid}`;
+    const api = `https://elpida.my.id/ll/api.php?lid=${lid}&uid=${uid}`;
     $.ajax({
       'url': api,
       'async':false,
@@ -359,17 +370,21 @@
 
   }
 
-setInterval(function(){ 
-  
-    var cn = CekNewData(uid)
-    data_baru = cn - last_count;
-    if(data_baru == 0){
-      //console.log('Tidak ada data baru');
-    }else{
-      $("#newmsg").html('<button type="button" class="nes-btn is-success" onclick="RenderNewData();" id="renew">Terdapat '+data_baru+' pesan baru</button>')
-    }
-  }, 6000);
 
+if(uid > 0){
+
+  setInterval(function(){ 
+  
+  var cn = CekNewData(uid)
+  data_baru = cn - last_count;
+  if(data_baru == 0){
+    //console.log('Tidak ada data baru');
+  }else{
+    $("#newmsg").html('<button type="button" class="nes-btn is-success" onclick="RenderNewData();" id="renew">Terdapat '+data_baru+' pesan baru</button>')
+  }
+}, 6000);
+
+}
 
 </script>
 
